@@ -1,7 +1,19 @@
-# Tauri + Vanilla
+#  Cinny Mobile
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
+Proof of concept for running cinny under the tauri mobile alpha
 
-## Recommended IDE Setup
+**Note: Very Experimental**
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+### Local Development
+
+After following instructions for setting up Android Studio / SDK + Rust
+
+* `git clone --recursive https://github.com/Airyzz/cinny-mobile.git`
+* `cd cinny`
+* `npm ci`
+* `cd ..`
+* `npm ci`
+* `cargo tauri android init`
+
+To start local dev server, run:
+* `cargo tauri android dev`

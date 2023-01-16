@@ -1,22 +1,17 @@
 {
   "build": {
-    "beforeDevCommand": "",
-    "beforeBuildCommand": "",
-    "devPath": "../src",
-    "distDir": "../src",
-    "withGlobalTauri": true
+    "beforeDevCommand": "cd cinny && npm start",
+    "beforeBuildCommand": "cd cinny && npm run build",
+    "devPath": "http://localhost:8080",
+    "distDir": "../cinny/dist"
   },
   "package": {
-    "productName": "cinny",
-    "version": "0.0.0"
+    "productName": "Cinny Mobile",
+    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      }
+      "all": false
     },
     "bundle": {
       "active": true,
@@ -33,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "org.cinny.mobile",
+      "identifier": "xyz.airyz.cinny.android",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -59,10 +54,7 @@
     },
     "windows": [
       {
-        "fullscreen": false,
         "height": 600,
-        "resizable": true,
-        "title": "cinny-mobile",
         "width": 800
       }
     ]
