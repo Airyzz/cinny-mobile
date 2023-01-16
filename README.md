@@ -6,7 +6,7 @@ Proof of concept for running cinny under the tauri mobile alpha
 
 ### Local Development
 
-After following instructions for setting up Android Studio / SDK + Rust
+After following [instructions for setting up Android Studio / SDK + Rust](https://next--tauri.netlify.app/next/guides/getting-started/prerequisites)
 
 * `git clone --recursive https://github.com/Airyzz/cinny-mobile.git`
 * `cd cinny`
