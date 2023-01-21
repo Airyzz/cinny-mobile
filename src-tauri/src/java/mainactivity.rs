@@ -1,4 +1,6 @@
 
+use std::ptr;
+
 use jni::JNIEnv;
 
 use jni::objects::{GlobalRef, JClass, JObject, JString};
@@ -25,4 +27,9 @@ pub extern "system" fn Java_xyz_airyz_cinny_app_MainActivity_myNativeMethod(
         .expect("Couldn't create java string!");
     // Finally, extract the raw pointer to return.
     output.into_raw()
+}
+
+#[no_mangle]
+pub extern "system" fn Java_xyz_airyz_cinny_app_MainActivity_myOtherNativeMethod(env: JNIEnv, _class: JClass ) {
+    env.call_method(_class, "callMeFromRust", "()V", &[]).unwrap();
 }
