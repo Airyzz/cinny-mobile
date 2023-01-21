@@ -35,7 +35,6 @@ android {
             isDebuggable = true
             isJniDebuggable = true
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("debug")
             packagingOptions {
                 jniLibs.keepDebugSymbols.add("*/arm64-v8a/*.so")
 

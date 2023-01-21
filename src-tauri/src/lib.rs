@@ -1,4 +1,5 @@
 use tauri::App;
+mod java;
 
 #[cfg(mobile)]
 mod mobile;
