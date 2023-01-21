@@ -19,12 +19,23 @@ android {
         val ndkHome = System.getenv("NDK_HOME")
         jniLibs.srcDir("${ndkHome}/sources/third_party/vulkan/src/build-android/jniLibs")
     }
+
+    signingConfigs {
+        named("debug") {
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+            storeFile = file("./signature/debug.jks")
+            storePassword = "android"
+        }
+   }
+
     buildTypes {
         getByName("debug") {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             isDebuggable = true
             isJniDebuggable = true
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
             packagingOptions {
                 jniLibs.keepDebugSymbols.add("*/arm64-v8a/*.so")
 
@@ -38,6 +49,7 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     flavorDimensions.add("abi")
