@@ -1,1 +1,1 @@
-mod mainactivity;
+mod main_activity;

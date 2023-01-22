@@ -3,27 +3,26 @@ use tokio::{sync::{
   Mutex,
   futures
 }};
-
-use tauri::{App, Manager};
+use lazy_static::*;
+use tauri::{App, Manager, AppHandle};
 mod java;
 mod messages;
-use messages::BACK_BUTTON;
+
+use messages::navigation::back_button::{self, BACK_BUTTON_SENDER};
+
 
 #[cfg(mobile)]
 mod mobile;
 #[cfg(mobile)]
 pub use mobile::*;
 
+use crate::messages::AppMessage;
+
 pub type SetupHook = Box<dyn FnOnce(&mut App) -> Result<(), Box<dyn std::error::Error>> + Send>;
 
 #[derive(Default)]
 pub struct AppBuilder {
   setup: Option<SetupHook>,
-}
-
-#[derive(Clone, serde::Serialize)]
-struct Payload {
-  message: String,
 }
 
 impl AppBuilder {
@@ -40,6 +39,8 @@ impl AppBuilder {
     self
   }
 
+  
+
   pub fn run(self) {
 
     let setup = self.setup;
@@ -51,19 +52,13 @@ impl AppBuilder {
           (setup)(app)?;
         }
 
-        let (sender, mut receiver) = tauri::async_runtime::channel::<u8>(1);
-
-        *BACK_BUTTON.blocking_lock() = Some(sender);
         let app_handle = app.handle();
+        
+        let (sender, receiver) = tauri::async_runtime::channel::<u8>(1);
 
-        tauri::async_runtime::spawn(async move {
-          loop {
-            if let Some(_message) = receiver.recv().await {
-              println!("RECEIVEDDD");
-              app_handle.emit_all("tauri-event", Payload { message: "Tauri is awesome!".into() }).unwrap();
-            }
-          };
-        });
+        *BACK_BUTTON_SENDER.blocking_lock() = Some(sender);
+        
+        back_button::listen(app_handle, receiver);
         
         Ok(())
       })

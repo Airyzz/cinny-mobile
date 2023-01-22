@@ -7,7 +7,7 @@ use jni::objects::{GlobalRef, JClass, JObject, JString};
 
 use jni::sys::{jbyteArray, jint, jlong, jstring};
 
-use crate::messages::BACK_BUTTON;
+use crate::messages::navigation::back_button::{self, BACK_BUTTON_SENDER};
 
 #[no_mangle]
 pub extern "system" fn Java_xyz_airyz_cinny_app_MainActivity_myNativeMethod(
@@ -33,6 +33,7 @@ pub extern "system" fn Java_xyz_airyz_cinny_app_MainActivity_myNativeMethod(
 
 #[no_mangle]
 pub extern "system" fn Java_xyz_airyz_cinny_app_MainActivity_myOtherNativeMethod(env: JNIEnv, _class: JClass ) {
-    BACK_BUTTON.blocking_lock().as_ref().unwrap().blocking_send(1).unwrap();
+    println!("Sending message!");
+    BACK_BUTTON_SENDER.blocking_lock().as_ref().unwrap().blocking_send(1).unwrap();
     env.call_method(_class, "callMeFromRust", "()V", &[]).unwrap();
 }
